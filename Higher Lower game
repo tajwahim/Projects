@@ -1,0 +1,38 @@
+import game_data
+import random
+import art
+endgame = False
+random_person1\
+        = game_data.data[random.randint(1, 49)]
+current_score = 0
+while not endgame:
+    random_person2\
+        = game_data.data[random.randint(1, 49)]
+    print(art.logo)
+    if current_score > 0:
+        print(f"You got it! Current score: {current_score}")
+    print(f"Compare A: {random_person1['name']}, a {random_person1['description']}, from {random_person1['country']}")
+    print(art.vs)
+    print(f"Against B: {random_person2['name']}, a {random_person2['description']}, from {random_person2['country']}")
+    answer = input("Who has more followers, 'A' or 'B'? ").lower()
+    if random_person1['follower_count'] == random_person2['follower_count']:
+        print("they are tied")
+    if answer == "a":
+        if random_person1['follower_count'] > random_person2['follower_count']:
+            print("\n" * 20)
+            random_person1 = random_person2
+            current_score += 1
+        else:
+            print("wrong")
+            endgame = True
+    elif answer == "b":
+        if random_person1['follower_count'] < random_person2['follower_count']:
+            print("\n" * 20)
+            random_person1 = random_person2
+            current_score += 1
+        else:
+            print("wrong")
+            endgame = True
+print("\n"*20)
+print(art.logo)
+print(f"Sorry that's wrong, final score: {current_score}")    
