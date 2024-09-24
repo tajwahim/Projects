@@ -1,0 +1,24 @@
+import random
+print("Welcome to the number guessing game!")
+print("Im thinking of a number between 1 and 100.")
+diff = input("Choose 'easy' or 'hard' difficulty. ")
+numbers = list(range(1, 101))
+chosen_num = random.choice(numbers)
+if diff == "easy":
+    lives = 10
+else:
+    lives = 5
+def guess():
+    global lives
+    while lives > 0:
+        print(f"You have {lives} attempts remaining to guess the number")
+        answer = int(input("Make a guess: "))
+        if answer == chosen_num:
+            return print(f"You got it! The answer was {chosen_num}")
+        elif answer < chosen_num:
+            print("Too low")
+            lives -= 1
+        elif answer > chosen_num:
+            print("Too high")
+            lives -= 1
+guess()
