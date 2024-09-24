@@ -1,0 +1,129 @@
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+}
+
+machine_money = 0
+
+
+def change():
+    global machine_money
+    print("Please insert coins.")
+    quarters = input("how many quarters?: ")
+    dimes = input("how many dimes?: ")
+    nickels = input("how many nickles?: ")
+    pennies = input("how many pennies?: ")
+    quarters = int(quarters)
+    dimes = int(dimes)
+    nickels = int(nickels)
+    pennies = int(pennies)
+    amount = 0
+    amount += .01 * pennies
+    amount += .05 * nickels
+    amount += .10 * dimes
+    amount += .25 * quarters
+    if amount >= MENU[coffee]['cost']:
+        money_back = round(amount - MENU[coffee]['cost'], 2)
+        print(f"Here is ${money_back} in change.")
+        machine_money += MENU[coffee]['cost']
+        print(f"Here is your {coffee} ☕️. Enjoy!")
+    else:
+        print("Sorry that's not enough, money refunded.")
+
+
+def coffee_is_espresso():
+    if MENU[coffee]['ingredients']['water'] <= resources['water']:
+        if MENU[coffee]['ingredients']['coffee'] <= resources['coffee']:
+            resources['water'] = resources['water'] - MENU[coffee]['ingredients']['water']
+            resources['coffee'] = resources['coffee'] - MENU[coffee]['ingredients']['coffee']
+            change()
+        else:
+            print("Sorry there is not enough coffee.")
+    else:
+        print("Sorry there is not enough water.")
+
+
+def coffe_is_latte():
+    if MENU[coffee]['ingredients']['water'] <= resources['water']:
+        if MENU[coffee]['ingredients']['coffee'] <= resources['coffee']:
+            if MENU[coffee]['ingredients']['milk'] <= resources['milk']:
+                resources['water'] = resources['water'] - MENU[coffee]['ingredients']['water']
+                resources['coffee'] = resources['coffee'] - MENU[coffee]['ingredients']['coffee']
+                resources['milk'] = resources['milk'] - MENU[coffee]['ingredients']['milk']
+                change()
+            else:
+                print("Sorry there is not enough milk.")
+        else:
+            print("Sorry there is not enough coffee.")
+    else:
+        print("Sorry there is not enough water.")
+
+
+def coffee_is_cappuccino():
+    if MENU[coffee]['ingredients']['water'] <= resources['water']:
+        if MENU[coffee]['ingredients']['coffee'] <= resources['coffee']:
+            if MENU[coffee]['ingredients']['milk'] <= resources['milk']:
+                resources['water'] = resources['water'] - MENU[coffee]['ingredients']['water']
+                resources['coffee'] = resources['coffee'] - MENU[coffee]['ingredients']['coffee']
+                resources['milk'] = resources['milk'] - MENU[coffee]['ingredients']['milk']
+                change()
+            else:
+                print("Sorry there is not enough milk.")
+        else:
+            print("Sorry there is not enough coffee.")
+    else:
+        print("Sorry there is not enough water.")
+
+
+def coffee_is_off():
+    global on
+    on = False
+
+
+def coffee_is_report():
+    print(f"Water: {resources['water']}ml")
+    print(f"Milk: {resources['milk']}ml")
+    print(f"Coffee: {resources['coffee']}g")
+    print(f"Money: ${machine_money}")
+
+
+on = True
+while on:
+    coffee = input("What would you like? (espresso/latte/cappuccino): ").lower()
+    if coffee == "espresso":
+        coffee_is_espresso()
+    elif coffee == "latte":
+        coffe_is_latte()
+    elif coffee == "cappuccino":
+        coffee_is_cappuccino()
+    elif coffee == "off":
+        coffee_is_off()
+    elif coffee == "report":
+        coffee_is_report()
