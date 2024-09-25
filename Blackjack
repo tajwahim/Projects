@@ -1,0 +1,73 @@
+import random
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+user = [random.choice(cards), random.choice(cards),]
+computer = [random.choice(cards), random.choice(cards)]
+userscore = sum(user)
+computerscore = sum(computer)
+if 11 in user and userscore > 21:
+    position = user.index(11)
+    user.remove(11)
+    user.insert(position, 1)
+    userscore = sum(user)
+print(f"Your cards are {user}, current score: {userscore}")
+print(f"Computer's first card: {computer[0]}")
+keepdrawing = True
+while keepdrawing is True:
+    answer = input("Do you want to draw another card? 'Y' or 'N': ").lower()
+    if answer == "y":
+        user += [random.choice(cards)]
+        userscore = sum(user)
+        if 11 in user and userscore > 21:
+            position = user.index(11)
+            user.remove(11)
+            user.insert(position, 1)
+            userscore = sum(user)
+        print(f"Your cards are {user}, current score: {userscore}")
+        print(f"Computer's first card: {computer[0]}")
+        if userscore > 21:
+            keepdrawing = False
+            print(f"Your final cards are {user}, final score: {userscore}")
+    else:
+        keepdrawing = False
+        print(f"Your final cards are {user}, final score: {userscore}")
+userscore = sum(user)
+while computerscore < 16:
+    computer += [random.choice(cards)]
+    computerscore = sum(computer)
+    if 11 in computer and computerscore > 21:
+        position = computer.index(11)
+        computer.remove(11)
+        computer.insert(position, 1)
+        computerscore = sum(computer)
+print(f"Computer's final cards {computer}, final score: {computerscore}")
+
+game_end = False
+if game_end is False and computer == [11, 10] or computer == [10, 11]:
+    game_end = True
+    print("Computer won")
+elif game_end is False and user == [11, 10] or user == [10, 11]:
+    game_end = True
+    print("You won")
+
+if game_end is False and userscore > 21:
+    game_end = True
+    print("Computer won")
+elif game_end is False and computerscore > 21:
+    game_end = True
+    print("You won")
+elif game_end is False and userscore > 21 and computerscore > 21:
+    game_end = True
+    print("No one won")
+
+userscore2 = 21 - userscore
+computerscore2 = 21 - computerscore
+
+if game_end is False and userscore2 < computerscore2:
+    game_end = True
+    print("You won")
+elif game_end is False and userscore2 == computerscore2:
+    game_end = True
+    print("No one won")
+elif game_end is False and userscore2 > computerscore2:
+    game_end = True
+    print("Computer won")
