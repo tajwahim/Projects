@@ -1,0 +1,47 @@
+def add(n1, n2):
+    return n1 + n2
+
+
+def subtract(n1, n2):
+    return n1 - n2
+
+
+def multiply(n1, n2):
+    return n1 * n2
+
+
+def divide(n1, n2):
+    return n1 / n2
+
+
+operations = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide,
+}
+answer = "n"
+while answer == "n":
+    number = float(input("What's the first number?: "))
+    print("+")
+    print("-")
+    print("*")
+    print("/")
+    op = input("Pick an operation: ")
+    nnumber = float(input("What's the next number?: "))
+    print(f"{number} {op} {nnumber} = {operations[op](number, nnumber)}")
+    answer = input(f"Type 'y' to continue calculating with {operations[op](number, nnumber)}, or type 'n' to start a new calculation: ").lower()
+    number = operations[op](number, nnumber)
+    if answer == "n":
+        print("\n" * 5)
+
+while answer == "y":
+    print("+")
+    print("-")
+    print("*")
+    print("/")
+    op = input("Pick an operation: ")
+    nnumber = float(input("What's the next number?: "))
+    print(f"{number} {op} {nnumber} = {operations[op](number, nnumber)}")
+    answer = input(f"Type 'y' to continue calculating with {operations[op](number, nnumber)}, or type 'n' to start a new calculation: ").lower()
+    number = operations[op](number, nnumber)
