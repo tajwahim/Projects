@@ -1,0 +1,71 @@
+from turtle import Turtle
+
+
+class Paddles(Turtle):
+    def __init__(self, x, y):
+        super().__init__()
+        self.shape("square")
+        self.penup()
+        self.color("white")
+        self.turtlesize(5, 1)
+        self.teleport(x, y)
+
+    def move_up(self):
+        self.goto(self.xcor(), self.ycor() + 20)
+
+    def move_down(self):
+        self.goto(self.xcor(), self.ycor() - 20)
+
+
+class Ball(Turtle):
+    def __init__(self):
+        self.x = 3
+        self.y = 3
+        super().__init__()
+        self.shape("square")
+        self.color("white")
+        self.penup()
+
+    def move(self):
+        self.goto(self.xcor() + self.x, self.ycor() + self.y)
+
+    def bounce(self):
+        self.y *= -1
+
+    def bounce_x(self):
+        self.x *= -1
+
+    def other_way(self):
+        self.home()
+        self.bounce_x()
+
+
+class Scoreboard(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.penup()
+        self.hideturtle()
+        self.l_score = 0
+        self.r_score = 0
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.goto(-100, 180)
+        self.write(self.l_score, align="center", font=("courier", 80, "bold"))
+        self.goto(100, 180)
+        self.write(self.r_score, align="center", font=("courier", 80, "bold"))
+
+    def l_point(self):
+        self.l_score += 1
+        self.update_scoreboard()
+
+    def r_point(self):
+        self.r_score += 1
+        self.update_scoreboard()
+
+    def win(self, winner):
+        self.home()
+        self.write(f"{winner} won!", align="center", font=("courier", 50, "bold"))
