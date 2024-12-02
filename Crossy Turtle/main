@@ -1,0 +1,41 @@
+import time
+from turtle import Screen
+from player import Player
+from car_manager import CarManager
+from scoreboard import Scoreboard
+
+cycle = 0
+level = 1
+carl = []
+screen = Screen()
+screen.title("Crossy Turtle")
+screen.setup(width=600, height=600)
+screen.tracer(0)
+player = Player()
+score = Scoreboard()
+game_is_on = True
+while game_is_on:
+    time.sleep(0.1)
+    if cycle % 3 == 0:
+        cars = CarManager()
+        cars.make_car()
+        carl.append(cars)
+    for cars in carl:
+        cars.speedup(level)
+    screen.listen()
+    screen.onkey(player.move, "Up")
+    for cars in carl:
+        if player.distance(cars) < 20:
+            game_is_on = False
+            score.over()
+    if player.ycor() > 280:
+        level += 1
+        player.goto(0, -280)
+        for cars in carl:
+            cars.speedup(level)
+        score.level += 1
+        score.clear()
+        score.display_level()
+    cycle += 1
+    screen.update()
+screen.exitonclick()
